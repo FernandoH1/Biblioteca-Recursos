@@ -19,7 +19,7 @@ public class RecursoController {
     @Autowired
     RecursoServiceImpl recursoService;
 
-    @GetMapping(value = "/all")
+    @GetMapping(value = "")
     private Flux<Recurso> allRecursos() {
         return this.recursoService.findAll();
     }
@@ -31,6 +31,7 @@ public class RecursoController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.OK)
     private Mono<ResponseEntity<Recurso>> deleteRecurso(@PathVariable("id") String id) {
         return this.recursoService.delete(id)
                 .flatMap(recurso -> Mono.just(ResponseEntity.ok(recurso)))
@@ -39,6 +40,7 @@ public class RecursoController {
     }
 
     @PutMapping(value = "/edit/{id}")
+    @ResponseStatus(HttpStatus.OK)
     private Mono<ResponseEntity<Recurso>> updateCliente(@PathVariable("id") String id, @RequestBody Recurso recurso) {
         return this.recursoService.update(id, recurso)
                 .flatMap(recurso1 -> Mono.just(ResponseEntity.ok(recurso1)))
@@ -52,6 +54,19 @@ public class RecursoController {
     }
 
 
+    @GetMapping(value = "/isDisponible/{id}")
+    public Mono<String> isDisponile(@PathVariable("id") String id){
+        var isDisponible = recursoService.consultarDisponibilidad(id);
+        if(isDisponible == null){
+            return isDisponible;
+        }
+        return isDisponible;
+    }
+
+    @PutMapping("/prestar/{id}")
+    public Mono prestarRecurso(@PathVariable("id") String id){
+        return recursoService.prestarUnRecurso(id);
+    }
 
 
 }

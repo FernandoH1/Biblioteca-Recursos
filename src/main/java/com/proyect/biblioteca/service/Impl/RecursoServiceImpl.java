@@ -5,8 +5,12 @@ import com.proyect.biblioteca.repository.RecursosRepository;
 import com.proyect.biblioteca.service.RecursoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.time.LocalDate;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class RecursoServiceImpl implements RecursoService {
@@ -46,4 +50,42 @@ public class RecursoServiceImpl implements RecursoService {
     public Mono<Recurso> findById(String id) {
         return this.recursosRepository.findById(id);
     }
+
+    @Override
+    public Mono<String> consultarDisponibilidad(@PathVariable("id") String id) {
+        Mono<Recurso> recurso = recursosRepository.findById(id);
+        return validarDisponibilidad(recurso);
+    }
+
+    @Override
+    public Mono<String> validarDisponibilidad(Mono<Recurso> recurso) {
+        try {
+            return recurso.map(libro -> {
+                var disponibilidad = libro.isPrestado() ? "No se encuentra dispobile desde: " + libro.getFechaDeSalida() : "Disponible";
+                return Mono.just(disponibilidad);
+            }).toFuture().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Mono<String> prestarUnRecurso(String id) {
+
+        return recursosRepository.findById(id).flatMap(recurso -> {
+                    if(recurso.isPrestado()){
+                        return Mono.just("No esta disponible porque fue prestado el "+ recurso.getFechaDeSalida());
+                    }
+                    recurso.setPrestado(true);
+                    recurso.setFechaDeSalida(LocalDate.now());
+                    return recursosRepository.save(recurso).then(Mono.just("El recurso esta disponible"));
+                }
+        );
+    }
+
+    
+
 }

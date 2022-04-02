@@ -47,10 +47,6 @@ public class Recurso {
         return isPrestado;
     }
 
-    public void setPrestado(boolean prestado) {
-        isPrestado = prestado;
-    }
-
     public String getTitulo() {
         return titulo;
     }
@@ -67,6 +63,10 @@ public class Recurso {
         this.tipo = tipo;
     }
 
+    public Recurso setPrestado(boolean prestado) {
+        this.isPrestado = prestado;
+        return this;
+    }
 
     public String getAreaTematica() {
         return areaTematica;
