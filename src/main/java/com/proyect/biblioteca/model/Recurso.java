@@ -12,16 +12,18 @@ public class Recurso {
     @Id
     private String id = UUID.randomUUID().toString().substring(0, 10);
 
-    private String fechaSalida;
+    private String fechaDeSalida;
     private boolean isPrestado;
     private String titulo;
     private String tipo;
+    private String areaTematica;
 
-    public Recurso(String fechaSalida, String titulo, String tipo){
-        this.fechaSalida = Objects.requireNonNull(fechaSalida);
+    public Recurso(String fechaDeSalida, String titulo, String tipo,String areaTematica){
+        this.fechaDeSalida = Objects.requireNonNull(fechaDeSalida);
         this.isPrestado = false;
         this.titulo = Objects.requireNonNull(titulo);
         this.tipo = Objects.requireNonNull(tipo);
+        this.areaTematica = areaTematica;
     }
 
     public String getId() {
@@ -32,12 +34,12 @@ public class Recurso {
         this.id = id;
     }
 
-    public String getFechaSalida() {
-        return fechaSalida;
+    public String getFechaDeSalida() {
+        return fechaDeSalida;
     }
 
-    public void setFechaSalida(String fechaSalida) {
-        this.fechaSalida = fechaSalida;
+    public void setFechaDeSalida(String fechaDeSalida) {
+        this.fechaDeSalida = fechaDeSalida;
     }
 
     public boolean isPrestado() {
@@ -62,5 +64,14 @@ public class Recurso {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+
+    public String getAreaTematica() {
+        return areaTematica;
+    }
+
+    public void setAreaTematica(String areaTematica) {
+        this.areaTematica = areaTematica;
     }
 }
