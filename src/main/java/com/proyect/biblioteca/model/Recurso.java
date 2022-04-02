@@ -3,6 +3,7 @@ package com.proyect.biblioteca.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -12,14 +13,14 @@ public class Recurso {
     @Id
     private String id = UUID.randomUUID().toString().substring(0, 10);
 
-    private String fechaDeSalida;
+    private LocalDate fechaDeSalida;
     private boolean isPrestado;
     private String titulo;
     private String tipo;
     private String areaTematica;
 
-    public Recurso(String fechaDeSalida, String titulo, String tipo,String areaTematica){
-        this.fechaDeSalida = Objects.requireNonNull(fechaDeSalida);
+    public Recurso(String titulo, String tipo,String areaTematica){
+        this.fechaDeSalida = LocalDate.now();
         this.isPrestado = false;
         this.titulo = Objects.requireNonNull(titulo);
         this.tipo = Objects.requireNonNull(tipo);
@@ -34,11 +35,11 @@ public class Recurso {
         this.id = id;
     }
 
-    public String getFechaDeSalida() {
+    public LocalDate getFechaDeSalida() {
         return fechaDeSalida;
     }
 
-    public void setFechaDeSalida(String fechaDeSalida) {
+    public void setFechaDeSalida(LocalDate fechaDeSalida) {
         this.fechaDeSalida = fechaDeSalida;
     }
 
