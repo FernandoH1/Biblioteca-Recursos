@@ -68,5 +68,10 @@ public class RecursoController {
         return recursoService.prestarUnRecurso(id);
     }
 
+    @GetMapping(value = "recomendar/{tipo}/{area}")
+    private Flux<Recurso> Recomendar(@PathVariable("tipo") String tipo, @PathVariable("area") String area) {
+        return this.recursoService.recomendarPorTipoyArea(tipo,area);
+    }
+
 
 }

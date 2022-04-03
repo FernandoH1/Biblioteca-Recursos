@@ -86,6 +86,11 @@ public class RecursoServiceImpl implements RecursoService {
         );
     }
 
+    @Override
+    public Flux<Recurso> recomendarPorTipoyArea(String tipo, String area) {
+        return recursosRepository.findByTipo(tipo).filter(recurso -> recurso.getAreaTematica().equals(area));
+    }
+
     
 
 }

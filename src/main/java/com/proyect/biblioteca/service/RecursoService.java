@@ -21,5 +21,7 @@ public interface RecursoService {
     Mono<String> validarDisponibilidad(Mono<Recurso> recurso);
 
     Mono<String> prestarUnRecurso(String id);
+
+    Flux<Recurso> recomendarPorTipoyArea(String tipo, String area);
 }
 
