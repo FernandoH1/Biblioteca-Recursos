@@ -23,5 +23,7 @@ public interface RecursoService {
     Mono<String> prestarUnRecurso(String id);
 
     Flux<Recurso> recomendarPorTipoyArea(String tipo, String area);
+
+    Mono<Object> devolverRecurso(String id);
 }
 

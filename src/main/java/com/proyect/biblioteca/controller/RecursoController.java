@@ -73,5 +73,10 @@ public class RecursoController {
         return this.recursoService.recomendarPorTipoyArea(tipo,area);
     }
 
+    @PutMapping("/devolver/{id}")
+    public Mono devolverRecurso(@PathVariable("id") String id){
+        return recursoService.devolverRecurso(id);
+    }
+
 
 }

@@ -91,6 +91,17 @@ public class RecursoServiceImpl implements RecursoService {
         return recursosRepository.findByTipo(tipo).filter(recurso -> recurso.getAreaTematica().equals(area));
     }
 
-    
+    @Override
+    public Mono<Object> devolverRecurso(String id) {
+        return recursosRepository.findById(id).flatMap(recurso-> {
+            if(!recurso.isPrestado() ) {
+                return Mono.just("el recurso ya se devolvió, No se puede devolver!!");
+            }else{
+                recurso.setPrestado(false);
+                return recursosRepository.save(recurso);
+            }
+        } );
+    }
+
 
 }
